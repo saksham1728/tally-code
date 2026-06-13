@@ -1,0 +1,309 @@
+/* Tally Connection Form Styles */
+
+.tally-connection-form-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.tally-connection-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.connection-header {
+  padding: 28px 32px;
+  border-bottom: 1px solid #e5e7eb;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+}
+
+.connection-header h2 {
+  margin: 0 0 8px 0;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.connection-description {
+  margin: 0;
+  font-size: 15px;
+  opacity: 0.95;
+}
+
+/* Form Sections */
+.form-section {
+  padding: 28px 32px;
+}
+
+.form-section h3 {
+  margin: 0 0 20px 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.credentials-section {
+  margin-top: 28px;
+  padding-top: 28px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.credentials-section h4 {
+  margin: 0 0 8px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.credentials-info {
+  margin: 0 0 20px 0;
+  font-size: 14px;
+  color: #6b7280;
+}
+
+/* Form Elements */
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.required {
+  color: #dc2626;
+}
+
+.form-control {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 15px;
+  transition: all 0.2s;
+  box-sizing: border-box;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: #10b981;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+}
+
+.form-hint {
+  display: block;
+  margin-top: 6px;
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+/* Test Result */
+.test-result {
+  margin: 24px 32px;
+  padding: 20px;
+  border-radius: 8px;
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.test-result.test-success {
+  background: #d1fae5;
+  border: 1px solid #6ee7b7;
+}
+
+.test-result.test-error {
+  background: #fee2e2;
+  border: 1px solid #fca5a5;
+}
+
+.test-result-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.test-result-icon {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.test-success .test-result-icon {
+  color: #059669;
+}
+
+.test-error .test-result-icon {
+  color: #dc2626;
+}
+
+.test-result-title {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.test-success .test-result-title {
+  color: #065f46;
+}
+
+.test-error .test-result-title {
+  color: #991b1b;
+}
+
+.test-result-message {
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+
+.test-success .test-result-message {
+  color: #047857;
+}
+
+.test-error .test-result-message {
+  color: #b91c1c;
+}
+
+.test-result-time {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.test-success .test-result-time {
+  color: #059669;
+}
+
+/* Form Actions */
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 24px 32px;
+  border-top: 1px solid #e5e7eb;
+  background: #f9fafb;
+}
+
+.btn-test {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Help Section */
+.help-section {
+  padding: 28px 32px;
+  background: #fffbeb;
+  border-top: 1px solid #fde68a;
+}
+
+.help-section h4 {
+  margin: 0 0 16px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #78350f;
+}
+
+.help-section ol {
+  margin: 0 0 20px 0;
+  padding-left: 20px;
+  color: #92400e;
+}
+
+.help-section li {
+  margin-bottom: 8px;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.help-note {
+  padding: 16px;
+  background: white;
+  border: 1px solid #fde68a;
+  border-radius: 6px;
+  font-size: 14px;
+  color: #78350f;
+  line-height: 1.6;
+}
+
+.help-note strong {
+  font-weight: 700;
+}
+
+/* Loading Spinner in Button */
+.btn-test .loading-spinner {
+  width: 16px;
+  height: 16px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .tally-connection-form-container {
+    padding: 16px;
+  }
+
+  .connection-header {
+    padding: 20px;
+  }
+
+  .connection-header h2 {
+    font-size: 24px;
+  }
+
+  .connection-description {
+    font-size: 14px;
+  }
+
+  .form-section,
+  .test-result,
+  .form-actions,
+  .help-section {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .form-actions {
+    flex-direction: column-reverse;
+  }
+
+  .form-actions .btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .connection-header h2 {
+    font-size: 20px;
+  }
+
+  .help-section ol {
+    padding-left: 16px;
+  }
+
+  .help-section li {
+    font-size: 13px;
+  }
+}

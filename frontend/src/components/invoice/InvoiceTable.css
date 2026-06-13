@@ -1,0 +1,171 @@
+.invoice-table-container {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.table-responsive {
+  overflow-x: auto;
+}
+
+.invoice-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.invoice-table thead {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.invoice-table th {
+  padding: 1rem;
+  text-align: left;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.5px;
+}
+
+.invoice-table tbody tr {
+  border-bottom: 1px solid #f0f0f0;
+  transition: background-color 0.2s ease;
+}
+
+.invoice-table tbody tr:hover {
+  background-color: #f9f9f9;
+}
+
+.invoice-table tbody tr.row-unmatched {
+  background-color: #fff3e0;
+}
+
+.invoice-table tbody tr.row-unmatched:hover {
+  background-color: #ffe0b2;
+}
+
+.invoice-table td {
+  padding: 1rem;
+  vertical-align: middle;
+}
+
+.invoice-number {
+  font-weight: 600;
+  color: #667eea;
+}
+
+.company-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.company-name {
+  font-weight: 500;
+  color: #333;
+}
+
+.company-gstin {
+  font-size: 0.75rem;
+  color: #888;
+}
+
+.amount {
+  font-weight: 600;
+  color: #2e7d32;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.btn-action {
+  padding: 0.4rem 0.75rem;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.btn-view {
+  background-color: #e3f2fd;
+  color: #1565c0;
+}
+
+.btn-view:hover {
+  background-color: #bbdefb;
+}
+
+.btn-accept {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+}
+
+.btn-accept:hover {
+  background-color: #c8e6c9;
+}
+
+.btn-reject {
+  background-color: #ffebee;
+  color: #c62828;
+}
+
+.btn-reject:hover {
+  background-color: #ffcdd2;
+}
+
+.btn-push {
+  background-color: #f3e5f5;
+  color: #7b1fa2;
+}
+
+.btn-push:hover {
+  background-color: #e1bee7;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: #666;
+}
+
+.empty-icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+}
+
+.empty-state h3 {
+  margin: 0 0 0.5rem 0;
+  color: #333;
+}
+
+.empty-state p {
+  margin: 0;
+  color: #888;
+}
+
+@media (max-width: 768px) {
+  .invoice-table {
+    font-size: 0.8rem;
+  }
+
+  .invoice-table th,
+  .invoice-table td {
+    padding: 0.75rem 0.5rem;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+  }
+
+  .btn-action {
+    width: 100%;
+  }
+}

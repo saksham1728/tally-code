@@ -1,0 +1,36 @@
+services:
+  # Backend API Service
+  - type: web
+    name: tally-invoice-sync-backend
+    env: node
+    region: singapore
+    plan: free
+    buildCommand: cd backend && npm install
+    startCommand: cd backend && npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 3000
+      - key: MONGODB_URI
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_EXPIRATION
+        value: 24h
+      - key: ENCRYPTION_KEY
+        generateValue: true
+      - key: INTEGRATION_MODE
+        value: mock
+
+  # Frontend Service
+  - type: web
+    name: tally-invoice-sync-frontend
+    env: static
+    region: singapore
+    plan: free
+    buildCommand: cd frontend && npm install && npm run build
+    staticPublishPath: ./frontend/dist
+    envVars:
+      - key: VITE_API_BASE_URL
+        value: https://tally-invoice-sync-backend.onrender.com/api

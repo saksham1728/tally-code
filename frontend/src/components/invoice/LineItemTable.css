@@ -1,0 +1,158 @@
+/* Line Item Table Styles */
+
+.line-items-table-container {
+  overflow-x: auto;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: white;
+}
+
+.line-items-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.line-items-table thead {
+  background: #f9fafb;
+  border-bottom: 2px solid #e5e7eb;
+}
+
+.line-items-table th {
+  padding: 12px 16px;
+  text-align: left;
+  font-weight: 600;
+  color: #374151;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+.line-items-table tbody tr {
+  border-bottom: 1px solid #f3f4f6;
+  transition: background-color 0.15s;
+}
+
+.line-items-table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.line-items-table tbody tr:hover {
+  background-color: #f9fafb;
+}
+
+.line-items-table td {
+  padding: 14px 16px;
+  color: #111827;
+  vertical-align: top;
+}
+
+/* Column-specific styles */
+.col-line-no {
+  width: 50px;
+  text-align: center;
+  font-weight: 600;
+  color: #6b7280;
+}
+
+.col-description {
+  min-width: 250px;
+  max-width: 400px;
+}
+
+.description-text {
+  line-height: 1.5;
+  word-break: break-word;
+}
+
+.col-quantity {
+  width: 100px;
+  text-align: right;
+  font-weight: 500;
+}
+
+.col-rate {
+  width: 120px;
+  text-align: right;
+  font-weight: 500;
+}
+
+.col-amount {
+  width: 130px;
+  text-align: right;
+  font-weight: 600;
+}
+
+.total-cell {
+  background-color: #f0fdf4;
+  color: #059669;
+  font-weight: 700;
+}
+
+/* Empty state */
+.line-items-empty {
+  padding: 40px 20px;
+  text-align: center;
+  color: #6b7280;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+}
+
+.line-items-empty p {
+  margin: 0;
+  font-size: 14px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .line-items-table {
+    font-size: 12px;
+  }
+
+  .line-items-table th,
+  .line-items-table td {
+    padding: 10px 12px;
+  }
+
+  .col-description {
+    min-width: 200px;
+  }
+
+  .col-quantity,
+  .col-rate,
+  .col-amount {
+    width: auto;
+    min-width: 90px;
+  }
+}
+
+@media (max-width: 480px) {
+  .line-items-table-container {
+    border-radius: 4px;
+  }
+
+  .line-items-table {
+    font-size: 11px;
+  }
+
+  .line-items-table th,
+  .line-items-table td {
+    padding: 8px 10px;
+  }
+
+  .col-line-no {
+    width: 40px;
+  }
+
+  .col-description {
+    min-width: 150px;
+  }
+
+  .col-quantity,
+  .col-rate,
+  .col-amount {
+    min-width: 70px;
+  }
+}
