@@ -1,0 +1,60 @@
+{
+  "name": "tally-bridge",
+  "version": "1.0.0",
+  "description": "Desktop connector for Tally to Cloud Portal - Bridges local Tally software with cloud-based B2B invoice sync platform",
+  "main": "main.js",
+  "author": "Saksham Maheshwari",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron . --dev",
+    "build:win": "electron-builder --win",
+    "build:mac": "electron-builder --mac",
+    "pack": "electron-builder --dir",
+    "clean": "rm -rf dist node_modules"
+  },
+  "dependencies": {
+    "electron": "^28.0.0",
+    "electron-store": "^8.1.0",
+    "keytar": "^7.9.0",
+    "ws": "^8.15.0",
+    "axios": "^1.6.0",
+    "xml2js": "^0.6.0",
+    "winston": "^3.11.0",
+    "electron-updater": "^6.1.0",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "electron-builder": "^24.9.0"
+  },
+  "build": {
+    "appId": "com.tallybridge.app",
+    "productName": "TallyBridge",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "src/**/*",
+      "renderer/**/*",
+      "build/**/*"
+    ],
+    "win": {
+      "target": "nsis",
+      "icon": "build/icon.ico"
+    },
+    "mac": {
+      "target": "dmg",
+      "icon": "build/icon.png",
+      "category": "public.app-category.business"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "runAfterFinish": true
+    }
+  }
+}
