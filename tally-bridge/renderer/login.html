@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tally Bridge - Login</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="login-container">
+    <div class="login-box">
+      <div class="logo-section">
+        <svg class="logo-icon" viewBox="0 0 100 100" fill="none">
+          <rect x="10" y="10" width="80" height="80" rx="10" stroke="currentColor" stroke-width="4"/>
+          <path d="M30 50 L50 70 L70 30" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <h1>Tally Bridge</h1>
+        <p class="subtitle">Desktop Connector</p>
+      </div>
+
+      <form id="login-form">
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input 
+            type="email" 
+            id="email" 
+            name="email" 
+            placeholder="Enter your email"
+            required
+            autocomplete="email"
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input 
+            type="password" 
+            id="password" 
+            name="password" 
+            placeholder="Enter your password"
+            required
+            autocomplete="current-password"
+          >
+        </div>
+
+        <div class="form-group checkbox-group">
+          <label>
+            <input type="checkbox" id="remember" name="remember">
+            <span>Remember me</span>
+          </label>
+        </div>
+
+        <div id="error-message" class="error-message" style="display: none;"></div>
+
+        <button type="submit" id="login-btn" class="btn btn-primary">
+          <span class="btn-text">Login</span>
+          <span class="btn-loader" style="display: none;">
+            <svg class="spinner" viewBox="0 0 50 50">
+              <circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="4"></circle>
+            </svg>
+          </span>
+        </button>
+      </form>
+
+      <div class="footer-text">
+        <p>Connect to your cloud portal to sync invoices with Tally</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('login-form');
+    const emailInput = document.getElementById('email');
+    const passwordInput = document.getElementById('password');
+    const rememberCheckbox = document.getElementById('remember');
+    const errorMessage = document.getElementById('error-message');
+    const loginBtn = document.getElementById('login-btn');
+    const btnText = loginBtn.querySelector('.btn-text');
+    const btnLoader = loginBtn.querySelector('.btn-loader');
+
+    // Show error message
+    function showError(message) {
+      errorMessage.textContent = message;
+      errorMessage.style.display = 'block';
+      setTimeout(() => {
+        errorMessage.style.display = 'none';
+      }, 5000);
+    }
+
+    // Show loading state
+    function setLoading(loading) {
+      if (loading) {
+        loginBtn.disabled = true;
+        btnText.style.display = 'none';
+        btnLoader.style.display = 'inline-block';
+      } else {
+        loginBtn.disabled = false;
+        btnText.style.display = 'inline-block';
+        btnLoader.style.display = 'none';
+      }
+    }
+
+    // Handle form submit
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const email = emailInput.value.trim();
+      const password = passwordInput.value;
+
+      if (!email || !password) {
+        showError('Please enter email and password');
+        return;
+      }
+
+      setLoading(true);
+
+      try {
+        const result = await window.electronAPI.login({ email, password });
+
+        if (result.success) {
+          // Redirect to dashboard
+          window.location.href = 'index.html';
+        } else {
+          showError(result.error || 'Login failed. Please try again.');
+          setLoading(false);
+        }
+      } catch (error) {
+        showError('Connection error. Please check if backend is running.');
+        setLoading(false);
+      }
+    });
+
+    // Load saved email if remember me was checked
+    window.addEventListener('DOMContentLoaded', () => {
+      const savedEmail = localStorage.getItem('rememberedEmail');
+      if (savedEmail) {
+        emailInput.value = savedEmail;
+        rememberCheckbox.checked = true;
+      }
+    });
+
+    // Save email to localStorage when remember me is checked
+    rememberCheckbox.addEventListener('change', () => {
+      if (rememberCheckbox.checked) {
+        localStorage.setItem('rememberedEmail', emailInput.value);
+      } else {
+        localStorage.removeItem('rememberedEmail');
+      }
+    });
+  </script>
+</body>
+</html>

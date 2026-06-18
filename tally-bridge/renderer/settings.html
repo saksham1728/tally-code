@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tally Bridge - Settings</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="settings-container">
+    <header class="settings-header">
+      <button id="back-btn" class="btn-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="19" y1="12" x2="5" y2="12"></line>
+          <polyline points="12 19 5 12 12 5"></polyline>
+        </svg>
+      </button>
+      <h1>Settings</h1>
+    </header>
+
+    <main class="settings-main">
+      <form id="settings-form">
+        <!-- Connection Settings -->
+        <section class="card">
+          <h2>Connection Settings</h2>
+          
+          <div class="form-group">
+            <label for="tally-endpoint">Tally Endpoint</label>
+            <input 
+              type="text" 
+              id="tally-endpoint" 
+              name="tallyEndpoint"
+              placeholder="http://localhost:9000"
+            >
+            <small>URL where Tally ODBC server is running</small>
+          </div>
+
+          <div class="form-group">
+            <label for="cloud-endpoint">Cloud Endpoint</label>
+            <input 
+              type="text" 
+              id="cloud-endpoint" 
+              name="cloudEndpoint"
+              placeholder="ws://localhost:3000"
+            >
+            <small>WebSocket URL of your cloud backend</small>
+          </div>
+        </section>
+
+        <!-- Sync Settings -->
+        <section class="card">
+          <h2>Sync Settings</h2>
+          
+          <div class="form-group">
+            <label for="sync-interval">Sync Interval (minutes)</label>
+            <input 
+              type="number" 
+              id="sync-interval" 
+              name="syncInterval"
+              min="5"
+              max="120"
+              placeholder="15"
+            >
+            <small>How often to automatically sync (5-120 minutes)</small>
+          </div>
+
+          <div class="form-group checkbox-group">
+            <label>
+              <input type="checkbox" id="auto-sync" name="autoSync">
+              <span>Enable auto-sync</span>
+            </label>
+          </div>
+        </section>
+
+        <!-- Application Settings -->
+        <section class="card">
+          <h2>Application Settings</h2>
+          
+          <div class="form-group checkbox-group">
+            <label>
+              <input type="checkbox" id="auto-start" name="autoStart">
+              <span>Start automatically on system boot</span>
+            </label>
+          </div>
+
+          <div class="form-group checkbox-group">
+            <label>
+              <input type="checkbox" id="minimize-to-tray" name="minimizeToTray">
+              <span>Minimize to system tray</span>
+            </label>
+          </div>
+
+          <div class="form-group checkbox-group">
+            <label>
+              <input type="checkbox" id="show-notifications" name="showNotifications">
+              <span>Show notifications</span>
+            </label>
+          </div>
+
+          <div class="form-group">
+            <label for="log-level">Log Level</label>
+            <select id="log-level" name="logLevel">
+              <option value="error">Error</option>
+              <option value="warn">Warning</option>
+              <option value="info">Info</option>
+              <option value="debug">Debug</option>
+            </select>
+            <small>More detailed logs help with troubleshooting</small>
+          </div>
+        </section>
+
+        <!-- Save Button -->
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary">
+            Save Settings
+          </button>
+          <button type="button" id="reset-btn" class="btn btn-secondary">
+            Reset to Defaults
+          </button>
+        </div>
+
+        <div id="save-message" class="success-message" style="display: none;">
+          Settings saved successfully!
+        </div>
+      </form>
+
+      <!-- Danger Zone -->
+      <section class="card danger-zone">
+        <h2>Danger Zone</h2>
+        <p>These actions cannot be undone</p>
+        <div class="danger-actions">
+          <button id="reset-stats-btn" class="btn btn-danger">
+            Reset Sync Statistics
+          </button>
+          <button id="logout-btn" class="btn btn-danger">
+            Logout
+          </button>
+        </div>
+      </section>
+
+      <!-- App Info -->
+      <section class="card app-info">
+        <h3>About Tally Bridge</h3>
+        <p><strong>Version:</strong> 1.0.0</p>
+        <p><strong>Description:</strong> Desktop connector for syncing Tally invoices with cloud portal</p>
+        <p><strong>Support:</strong> support@tallybridge.com</p>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const form = document.getElementById('settings-form');
+    const backBtn = document.getElementById('back-btn');
+    const resetBtn = document.getElementById('reset-btn');
+    const resetStatsBtn = document.getElementById('reset-stats-btn');
+    const logoutBtn = document.getElementById('logout-btn');
+    const saveMessage = document.getElementById('save-message');
+
+    // Load current settings
+    async function loadSettings() {
+      try {
+        const config = await window.electronAPI.getConfig();
+        
+        document.getElementById('tally-endpoint').value = config.tallyEndpoint || '';
+        document.getElementById('cloud-endpoint').value = config.cloudEndpoint || '';
+        document.getElementById('sync-interval').value = config.syncInterval / 60000 || 15; // Convert ms to minutes
+        document.getElementById('auto-sync').checked = config.autoSync !== false;
+        document.getElementById('auto-start').checked = config.autoStart !== false;
+        document.getElementById('minimize-to-tray').checked = config.minimizeToTray !== false;
+        document.getElementById('show-notifications').checked = config.showNotifications !== false;
+        document.getElementById('log-level').value = config.logLevel || 'info';
+      } catch (error) {
+        console.error('Failed to load settings:', error);
+      }
+    }
+
+    // Save settings
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const formData = new FormData(form);
+      const config = {
+        tallyEndpoint: formData.get('tallyEndpoint'),
+        cloudEndpoint: formData.get('cloudEndpoint'),
+        syncInterval: parseInt(formData.get('syncInterval')) * 60000, // Convert minutes to ms
+        autoSync: document.getElementById('auto-sync').checked,
+        autoStart: document.getElementById('auto-start').checked,
+        minimizeToTray: document.getElementById('minimize-to-tray').checked,
+        showNotifications: document.getElementById('show-notifications').checked,
+        logLevel: formData.get('logLevel')
+      };
+
+      try {
+        const result = await window.electronAPI.saveConfig(config);
+        
+        if (result.success) {
+          saveMessage.style.display = 'block';
+          setTimeout(() => {
+            saveMessage.style.display = 'none';
+          }, 3000);
+        }
+      } catch (error) {
+        alert('Failed to save settings: ' + error.message);
+      }
+    });
+
+    // Back button
+    backBtn.addEventListener('click', () => {
+      window.location.href = 'index.html';
+    });
+
+    // Reset to defaults
+    resetBtn.addEventListener('click', () => {
+      if (confirm('Reset all settings to default values?')) {
+        document.getElementById('tally-endpoint').value = 'http://localhost:9000';
+        document.getElementById('cloud-endpoint').value = 'ws://localhost:3000';
+        document.getElementById('sync-interval').value = 15;
+        document.getElementById('auto-sync').checked = true;
+        document.getElementById('auto-start').checked = true;
+        document.getElementById('minimize-to-tray').checked = true;
+        document.getElementById('show-notifications').checked = true;
+        document.getElementById('log-level').value = 'info';
+      }
+    });
+
+    // Reset stats
+    resetStatsBtn.addEventListener('click', async () => {
+      if (confirm('Reset all sync statistics? This cannot be undone.')) {
+        // TODO: Implement reset stats
+        alert('Stats reset (not implemented yet)');
+      }
+    });
+
+    // Logout
+    logoutBtn.addEventListener('click', async () => {
+      if (confirm('Are you sure you want to logout?')) {
+        try {
+          await window.electronAPI.logout();
+          window.location.href = 'login.html';
+        } catch (error) {
+          alert('Logout failed: ' + error.message);
+        }
+      }
+    });
+
+    // Load settings on page load
+    loadSettings();
+  </script>
+</body>
+</html>

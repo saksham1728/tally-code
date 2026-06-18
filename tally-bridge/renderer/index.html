@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tally Bridge - Dashboard</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="dashboard-container">
+    <header class="dashboard-header">
+      <div class="header-left">
+        <svg class="logo-icon-small" viewBox="0 0 100 100" fill="none">
+          <rect x="10" y="10" width="80" height="80" rx="10" stroke="currentColor" stroke-width="4"/>
+          <path d="M30 50 L50 70 L70 30" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <h1>Tally Bridge</h1>
+      </div>
+      <div class="header-right">
+        <button id="settings-btn" class="btn btn-secondary">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M12 1v6m0 6v6m6-12l-4 4m-4 4l-4 4m12-16l-4 4m-4 4l-4 4"></path>
+          </svg>
+          Settings
+        </button>
+      </div>
+    </header>
+
+    <main class="dashboard-main">
+      <!-- Connection Status Section -->
+      <section class="card status-card">
+        <h2>Connection Status</h2>
+        <div class="status-grid">
+          <div class="status-item">
+            <div class="status-label">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+              <span>Tally</span>
+            </div>
+            <div class="status-badge" id="tally-status">
+              <span class="status-dot"></span>
+              <span class="status-text">Checking...</span>
+            </div>
+          </div>
+          <div class="status-item">
+            <div class="status-label">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"></path>
+              </svg>
+              <span>Cloud</span>
+            </div>
+            <div class="status-badge" id="cloud-status">
+              <span class="status-dot"></span>
+              <span class="status-text">Checking...</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Sync Statistics Section -->
+      <section class="card stats-card">
+        <h2>Sync Statistics</h2>
+        <div class="stats-grid">
+          <div class="stat-item">
+            <div class="stat-label">Last Sync</div>
+            <div class="stat-value" id="last-sync">Never</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-label">Invoices Synced</div>
+            <div class="stat-value" id="sync-count">0</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-label">Status</div>
+            <div class="stat-value" id="sync-status">Idle</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Actions Section -->
+      <section class="card actions-card">
+        <h2>Actions</h2>
+        <div class="actions-grid">
+          <button id="sync-now-btn" class="btn btn-primary btn-large">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="23 4 23 10 17 10"></polyline>
+              <polyline points="1 20 1 14 7 14"></polyline>
+              <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+            </svg>
+            Sync Now
+          </button>
+          <button id="open-portal-btn" class="btn btn-secondary btn-large">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+              <polyline points="15 3 21 3 21 9"></polyline>
+              <line x1="10" y1="14" x2="21" y2="3"></line>
+            </svg>
+            Open Portal
+          </button>
+          <button id="test-tally-btn" class="btn btn-secondary btn-large">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+            </svg>
+            Test Tally
+          </button>
+        </div>
+      </section>
+
+      <!-- Activity Log Section -->
+      <section class="card log-card">
+        <h2>Recent Activity</h2>
+        <div class="log-container" id="activity-log">
+          <div class="log-item">
+            <span class="log-time">--:--</span>
+            <span class="log-message">No activity yet</span>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="renderer.js"></script>
+</body>
+</html>
