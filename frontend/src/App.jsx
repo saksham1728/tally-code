@@ -21,16 +21,27 @@ import './App.css';
 
 // Protected Route Component
 const ProtectedRoute = ({ children, allowedRoles = [] }) => {
-  const { user, token } = useAuth();
+  const { user, isAuthenticated, loading } = useAuth();
+  
+  console.log('🛡️ ProtectedRoute check:', { user, isAuthenticated, loading, allowedRoles });
 
-  if (!token || !user) {
+  // Show loading while auth is being initialized
+  if (loading) {
+    console.log('⏳ Auth loading, waiting...');
+    return <div className="loading-screen">Loading...</div>;
+  }
+
+  if (!isAuthenticated || !user) {
+    console.log('❌ Not authenticated, redirecting to login');
     return <Navigate to="/login" replace />;
   }
 
   if (allowedRoles.length > 0 && !allowedRoles.includes(user.role)) {
+    console.log('❌ Role not allowed, redirecting to dashboard');
     return <Navigate to="/dashboard" replace />;
   }
 
+  console.log('✅ Access granted');
   return children;
 };
 
@@ -56,11 +67,11 @@ const DashboardRouter = () => {
 
 // Layout with Navbar
 const Layout = ({ children }) => {
-  const { token } = useAuth();
+  const { isAuthenticated } = useAuth();
 
   return (
     <div className="app-container">
-      {token && <Navbar />}
+      {isAuthenticated && <Navbar />}
       <main className="main-content">{children}</main>
     </div>
   );

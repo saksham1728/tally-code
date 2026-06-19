@@ -54,8 +54,9 @@ class AuthManager {
         timeout: 10000
       });
       
-      if (response.data && response.data.token) {
-        const { token, user } = response.data;
+      // Backend returns { success: true, data: { token, user, company } }
+      if (response.data && response.data.success && response.data.data) {
+        const { token, user } = response.data.data;
         
         // Store in keychain
         await keytar.setPassword(this.serviceName, email, token);
@@ -67,7 +68,7 @@ class AuthManager {
         this.logger.info('Login successful', { 
           email, 
           role: user.role,
-          company: user.company 
+          company: user.companyId 
         });
         
         return { 

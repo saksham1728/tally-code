@@ -107,11 +107,12 @@ async function startServer() {
     setupConnectionHandlers();
     
     // Start Express server
-    app.listen(PORT, () => {
+    const server = app.listen(PORT, () => {
       console.log(`\n✓ Server is running on port ${PORT}`);
       console.log(`✓ Environment: ${process.env.NODE_ENV || 'development'}`);
       console.log(`✓ Health check: http://localhost:${PORT}/health`);
-      console.log(`✓ API Base URL: http://localhost:${PORT}/api\n`);
+      console.log(`✓ API Base URL: http://localhost:${PORT}/api`);
+      console.log(`✓ WebSocket: ws://localhost:${PORT}/ws\n`);
       console.log('Available routes:');
       console.log('  POST   /api/auth/register');
       console.log('  POST   /api/auth/login');
@@ -133,6 +134,11 @@ async function startServer() {
       console.log('Server ready to accept requests');
       console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n');
     });
+    
+    // Initialize WebSocket server
+    const createWebSocketServer = require('./websocket-server');
+    const wss = createWebSocketServer(server);
+    console.log('✅ WebSocket server ready\n');
     
   } catch (error) {
     console.error('✗ Failed to start server:', error.message);

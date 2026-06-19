@@ -75,7 +75,7 @@ api.interceptors.response.use(
       
       // Clear auth data
       localStorage.removeItem('authToken');
-      localStorage.removeItem('user');
+      localStorage.removeItem('authUser');
       
       // Redirect to login (only if not already on login page)
       if (!window.location.pathname.includes('/login')) {
@@ -169,7 +169,7 @@ export const isAuthenticated = () => {
  * @returns {Object|null} User object or null
  */
 export const getCurrentUser = () => {
-  const userStr = localStorage.getItem('user');
+  const userStr = localStorage.getItem('authUser');
   if (!userStr) return null;
   
   try {
@@ -187,16 +187,18 @@ export const getCurrentUser = () => {
  * @param {Object} user - User object
  */
 export const saveAuthData = (token, user) => {
+  console.log('💾 Saving auth data:', { token: token.substring(0, 20) + '...', user: user.email });
   localStorage.setItem('authToken', token);
-  localStorage.setItem('user', JSON.stringify(user));
+  localStorage.setItem('authUser', JSON.stringify(user));
 };
 
 /**
  * Helper to clear auth data
  */
 export const clearAuthData = () => {
+  console.log('🗑️ Clearing auth data');
   localStorage.removeItem('authToken');
-  localStorage.removeItem('user');
+  localStorage.removeItem('authUser');
 };
 
 export default api;

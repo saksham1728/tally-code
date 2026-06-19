@@ -57,6 +57,7 @@ const LoginForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    e.stopPropagation();
     setApiError('');
 
     if (!validateForm()) {
@@ -66,27 +67,34 @@ const LoginForm = () => {
     setLoading(true);
 
     try {
+      console.log('🔐 Attempting login with:', formData.email);
       const result = await authService.login(formData.email, formData.password);
+      console.log('📥 Login result:', result);
 
       if (result.success) {
+        console.log('✅ Login successful, saving auth data...');
         // Save auth data and update context
         login(result.token, result.user);
-
-        // Redirect based on role
+        
+        console.log('🔄 Auth data saved, waiting for localStorage write...');
+        
+        // Wait a tiny bit for localStorage to flush, then redirect
+        await new Promise(resolve => setTimeout(resolve, 100));
+        
         const role = result.user.role;
-        if (role === 'seller_admin') {
-          navigate('/seller-dashboard');
-        } else if (role === 'buyer_admin') {
-          navigate('/buyer-dashboard');
-        } else if (role === 'super_admin') {
-          navigate('/admin');
-        } else {
-          navigate('/');
-        }
+        const redirectUrl = role === 'seller_admin' ? '/seller-dashboard' 
+          : role === 'buyer_admin' ? '/buyer-dashboard'
+          : role === 'super_admin' ? '/admin' 
+          : '/';
+        
+        console.log('🚀 Redirecting to:', redirectUrl);
+        window.location.href = redirectUrl;
       } else {
+        console.error('❌ Login failed:', result.error);
         setApiError(result.error || 'Login failed. Please try again.');
       }
     } catch (error) {
+      console.error('❌ Login error:', error);
       setApiError('An unexpected error occurred. Please try again.');
     } finally {
       setLoading(false);

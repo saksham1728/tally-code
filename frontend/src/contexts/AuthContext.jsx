@@ -20,13 +20,28 @@ export const AuthProvider = ({ children }) => {
   // Initialize auth state from localStorage
   useEffect(() => {
     const initAuth = () => {
-      if (isAuthenticated()) {
-        const userData = getCurrentUser();
-        if (userData) {
+      console.log('🔄 Initializing auth from localStorage...');
+      
+      const token = localStorage.getItem('authToken');
+      const userStr = localStorage.getItem('authUser');
+      
+      console.log('📦 Token:', token ? 'exists' : 'missing');
+      console.log('📦 User:', userStr ? 'exists' : 'missing');
+      
+      if (token && userStr) {
+        try {
+          const userData = JSON.parse(userStr);
+          console.log('✅ Auth restored:', userData.email);
           setUser(userData);
           setIsAuth(true);
+        } catch (error) {
+          console.error('❌ Failed to parse user data:', error);
+          clearAuthData();
         }
+      } else {
+        console.log('❌ No auth data found');
       }
+      
       setLoading(false);
     };
 

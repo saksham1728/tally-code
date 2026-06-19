@@ -306,18 +306,28 @@ class TallyConnector {
     const vouchers = result?.ENVELOPE?.BODY?.[0]?.DATA?.[0]?.COLLECTION?.[0]?.VOUCHER || [];
     
     return vouchers.map(voucher => {
+      const totalAmount = parseFloat(voucher.AMOUNT?.[0] || 0);
+      const taxableAmount = parseFloat(voucher.SUBTOTAL?.[0] || 0);
+      const taxAmount = parseFloat(voucher.TOTALTAX?.[0] || 0);
+      const invoiceNumber = voucher.VOUCHERNUMBER?.[0] || '';
+      
       return {
-        invoiceNumber: voucher.VOUCHERNUMBER?.[0] || '',
-        invoiceDate: voucher.DATE?.[0] || '',
+        invoiceNumber,
+        invoiceDate: voucher.DATE?.[0] || new Date().toISOString().split('T')[0],
         buyerCompanyName: voucher.PARTYNAME?.[0] || '',
         buyerGSTIN: voucher.PARTYGSTIN?.[0] || '',
-        totalAmount: parseFloat(voucher.AMOUNT?.[0] || 0),
-        lineItems: (voucher.ALLLEDGERENTRIES?.LIST || []).map((item, index) => ({
+        totalAmount,
+        taxableAmount,
+        taxAmount,
+        sourceReferenceId: `TALLY-${invoiceNumber}-${Date.now()}`, // Unique reference
+        rawPayload: JSON.stringify(voucher),
+        lineItems: (voucher['ALLLEDGERENTRIES.LIST'] || voucher.ALLLEDGERENTRIES?.LIST || []).map((item, index) => ({
           lineNumber: index + 1,
           description: item.STOCKITEMNAME?.[0] || '',
           quantity: parseFloat(item.ACTUALQTY?.[0] || 1),
           rate: parseFloat(item.RATE?.[0] || 0),
-          taxableAmount: parseFloat(item.AMOUNT?.[0] || 0)
+          taxableAmount: parseFloat(item.AMOUNT?.[0] || 0),
+          taxAmount: parseFloat(item.CGSTAMOUNT?.[0] || 0) * 2 // CGST + SGST (assuming equal)
         }))
       };
     });

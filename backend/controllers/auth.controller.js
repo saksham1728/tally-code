@@ -99,8 +99,16 @@ const register = async (req, res, next) => {
     
     await user.save();
     
+    // Create user object for token generation with just the ID
+    const userForToken = {
+      _id: user._id,
+      email: user.email,
+      role: user.role,
+      companyId: user.companyId // This is already just an ObjectId
+    };
+    
     // Generate JWT token (Requirements 1.1, 1.3)
-    const token = generateToken(user);
+    const token = generateToken(userForToken);
     
     res.status(201).json({
       success: true,
@@ -168,8 +176,24 @@ const login = async (req, res, next) => {
       return next(error);
     }
     
+    // Store company data before generating token
+    const companyData = {
+      _id: user.companyId._id,
+      name: user.companyId.name,
+      gstin: user.companyId.gstin,
+      companyType: user.companyId.companyType
+    };
+    
+    // Create user object for token generation with just the ID
+    const userForToken = {
+      _id: user._id,
+      email: user.email,
+      role: user.role,
+      companyId: user.companyId._id // Just the ID, not the full object
+    };
+    
     // Generate JWT token (Requirements 1.1, 1.3)
-    const token = generateToken(user);
+    const token = generateToken(userForToken);
     
     res.json({
       success: true,
@@ -181,12 +205,7 @@ const login = async (req, res, next) => {
           role: user.role,
           companyId: user.companyId._id
         },
-        company: {
-          _id: user.companyId._id,
-          name: user.companyId.name,
-          gstin: user.companyId.gstin,
-          companyType: user.companyId.companyType
-        }
+        company: companyData
       },
       message: 'Login successful'
     });
