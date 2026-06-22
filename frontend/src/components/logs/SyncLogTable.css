@@ -1,0 +1,316 @@
+/* Sync Log Table Styles */
+
+.sync-log-table-container {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.table-responsive {
+  overflow-x: auto;
+}
+
+.sync-log-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.sync-log-table thead {
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  color: white;
+}
+
+.sync-log-table th {
+  padding: 14px 16px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+.sync-log-table tbody tr {
+  border-bottom: 1px solid #f3f4f6;
+  transition: background-color 0.15s;
+}
+
+.sync-log-table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.sync-log-table tbody tr:hover {
+  background-color: #f9fafb;
+}
+
+.sync-log-table td {
+  padding: 14px 16px;
+  color: #111827;
+  vertical-align: middle;
+}
+
+/* Timestamp */
+.timestamp-cell {
+  white-space: nowrap;
+  color: #6b7280;
+  font-weight: 500;
+  font-size: 13px;
+}
+
+/* Event Type Badge */
+.event-type-cell {
+  white-space: nowrap;
+}
+
+.event-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: 16px;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.event-icon {
+  font-size: 14px;
+}
+
+.event-badge.event-blue {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+.event-badge.event-green {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.event-badge.event-red {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.event-badge.event-orange {
+  background: #ffedd5;
+  color: #9a3412;
+}
+
+.event-badge.event-yellow {
+  background: #fef3c7;
+  color: #78350f;
+}
+
+.event-badge.event-gray {
+  background: #f3f4f6;
+  color: #4b5563;
+}
+
+/* Invoice ID */
+.invoice-id-cell {
+  font-family: 'Monaco', 'Menlo', monospace;
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.invoice-id-link {
+  cursor: pointer;
+  color: #6366f1;
+  font-weight: 600;
+}
+
+.invoice-id-link:hover {
+  text-decoration: underline;
+}
+
+/* Company */
+.company-cell {
+  font-weight: 500;
+}
+
+/* Status Badge */
+.status-cell {
+  white-space: nowrap;
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: 16px;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.status-icon {
+  font-size: 14px;
+}
+
+.status-badge.status-green {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.status-badge.status-red {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.status-badge.status-yellow {
+  background: #fef3c7;
+  color: #78350f;
+}
+
+.status-badge.status-gray {
+  background: #f3f4f6;
+  color: #4b5563;
+}
+
+/* Details */
+.details-cell {
+  max-width: 300px;
+  font-size: 13px;
+}
+
+.error-message {
+  color: #dc2626;
+  font-weight: 500;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  cursor: help;
+}
+
+.metadata-info {
+  color: #6b7280;
+  font-style: italic;
+  cursor: help;
+}
+
+.no-data {
+  color: #d1d5db;
+  font-weight: 400;
+}
+
+/* Log Row Status Highlight */
+.log-row.log-status-red {
+  background-color: #fef2f2;
+}
+
+.log-row.log-status-red:hover {
+  background-color: #fee2e2;
+}
+
+/* Empty State */
+.logs-empty-state {
+  padding: 60px 20px;
+  text-align: center;
+  color: #6b7280;
+}
+
+.logs-empty-state .empty-icon {
+  font-size: 64px;
+  margin-bottom: 16px;
+  opacity: 0.5;
+}
+
+.logs-empty-state h3 {
+  margin: 0 0 8px 0;
+  font-size: 20px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.logs-empty-state p {
+  margin: 0;
+  font-size: 15px;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.6;
+}
+
+/* Logs Count */
+.logs-count {
+  padding: 12px 16px;
+  background: #f9fafb;
+  border-top: 1px solid #e5e7eb;
+  font-size: 13px;
+  font-weight: 600;
+  color: #6b7280;
+  text-align: right;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .details-cell {
+    max-width: 200px;
+  }
+}
+
+@media (max-width: 768px) {
+  .sync-log-table {
+    font-size: 12px;
+  }
+
+  .sync-log-table th,
+  .sync-log-table td {
+    padding: 10px 12px;
+  }
+
+  .event-badge,
+  .status-badge {
+    font-size: 11px;
+    padding: 4px 10px;
+  }
+
+  .details-cell {
+    max-width: 150px;
+  }
+}
+
+@media (max-width: 640px) {
+  .sync-log-table th,
+  .sync-log-table td {
+    padding: 8px 10px;
+  }
+
+  /* Hide less critical columns on mobile */
+  .invoice-id-cell,
+  .company-cell {
+    display: none;
+  }
+
+  .details-cell {
+    max-width: 120px;
+  }
+}
+
+@media (max-width: 480px) {
+  .timestamp-cell {
+    font-size: 11px;
+  }
+
+  .logs-empty-state {
+    padding: 40px 20px;
+  }
+
+  .logs-empty-state .empty-icon {
+    font-size: 48px;
+  }
+
+  .logs-empty-state h3 {
+    font-size: 18px;
+  }
+
+  .logs-empty-state p {
+    font-size: 14px;
+  }
+}
