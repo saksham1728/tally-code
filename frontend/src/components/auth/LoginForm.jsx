@@ -76,19 +76,11 @@ const LoginForm = () => {
         // Save auth data and update context
         login(result.token, result.user);
         
-        console.log('🔄 Auth data saved, waiting for localStorage write...');
+        console.log('🔄 Auth data saved, navigating with React Router...');
         
-        // Wait a tiny bit for localStorage to flush, then redirect
-        await new Promise(resolve => setTimeout(resolve, 100));
-        
-        const role = result.user.role;
-        const redirectUrl = role === 'seller_admin' ? '/seller-dashboard' 
-          : role === 'buyer_admin' ? '/buyer-dashboard'
-          : role === 'super_admin' ? '/admin' 
-          : '/';
-        
-        console.log('🚀 Redirecting to:', redirectUrl);
-        window.location.href = redirectUrl;
+        // Always redirect to /dashboard (DashboardRouter will handle role-based routing)
+        console.log('🚀 Navigating to: /dashboard');
+        navigate('/dashboard', { replace: true });
       } else {
         console.error('❌ Login failed:', result.error);
         setApiError(result.error || 'Login failed. Please try again.');
