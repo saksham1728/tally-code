@@ -15,7 +15,6 @@
   },
   "dependencies": {
     "axios": "^1.6.0",
-    "electron": "^42.4.1",
     "electron-store": "^8.1.0",
     "electron-updater": "^6.1.0",
     "express": "^4.18.0",
@@ -26,11 +25,12 @@
     "xml2js": "^0.6.0"
   },
   "devDependencies": {
+    "electron": "^42.4.1",
     "electron-builder": "^24.9.0"
   },
   "build": {
-    "appId": "com.tallybridge.app",
-    "productName": "TallyBridge",
+    "appId": "com.saksham.tallybridge",
+    "productName": "Tally Bridge",
     "directories": {
       "output": "dist"
     },
@@ -39,16 +39,17 @@
       "preload.js",
       "src/**/*",
       "renderer/**/*",
-      "build/**/*"
+      "build/**/*",
+      "!**/*.md",
+      "!.git",
+      "!dist"
     ],
-    "win": {
-      "target": "nsis",
-      "icon": "build/icon.ico"
-    },
     "mac": {
-      "target": "dmg",
-      "icon": "build/icon.png",
-      "category": "public.app-category.business"
+      "category": "public.app-category.business",
+      "target": ["dmg", "zip"]
+    },
+    "win": {
+      "target": ["nsis", "portable"]
     },
     "nsis": {
       "oneClick": false,
